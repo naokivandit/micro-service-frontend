@@ -4,7 +4,7 @@ import {
 } from "@apollo/client";
 
 export const client = new ApolloClient({
-  uri: "https://48p1r2roz4.sse.codesandbox.io",
+  uri: "https://graphql-pokemon2.vercel.app",
   cache: new InMemoryCache()
 });
 

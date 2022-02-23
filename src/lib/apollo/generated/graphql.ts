@@ -109,12 +109,14 @@ export type QueryPokemonsArgs = {
   first: Scalars['Int'];
 };
 
+export type PokemonFragment = { __typename?: 'Pokemon', id: string, name?: string | null, classification?: string | null, types?: Array<string | null> | null, resistant?: Array<string | null> | null, weaknesses?: Array<string | null> | null, fleeRate?: number | null, maxCP?: number | null, maxHP?: number | null, image?: string | null, weight?: { __typename?: 'PokemonDimension', minimum?: string | null, maximum?: string | null } | null, height?: { __typename?: 'PokemonDimension', minimum?: string | null, maximum?: string | null } | null, attacks?: { __typename?: 'PokemonAttack', fast?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null, special?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null } | null, evolutionRequirements?: { __typename?: 'PokemonEvolutionRequirement', amount?: number | null, name?: string | null } | null };
+
 export type GetPokemonsQueryVariables = Exact<{
   first: Scalars['Int'];
 }>;
 
 
-export type GetPokemonsQuery = { __typename?: 'Query', pokemons?: Array<{ __typename?: 'Pokemon', id: string, name?: string | null } | null> | null };
+export type GetPokemonsQuery = { __typename?: 'Query', pokemons?: Array<{ __typename?: 'Pokemon', id: string, name?: string | null, classification?: string | null, types?: Array<string | null> | null, resistant?: Array<string | null> | null, weaknesses?: Array<string | null> | null, fleeRate?: number | null, maxCP?: number | null, maxHP?: number | null, image?: string | null, weight?: { __typename?: 'PokemonDimension', minimum?: string | null, maximum?: string | null } | null, height?: { __typename?: 'PokemonDimension', minimum?: string | null, maximum?: string | null } | null, attacks?: { __typename?: 'PokemonAttack', fast?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null, special?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null } | null, evolutionRequirements?: { __typename?: 'PokemonEvolutionRequirement', amount?: number | null, name?: string | null } | null } | null> | null };
 
 export type GetPokemonQueryVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -122,17 +124,53 @@ export type GetPokemonQueryVariables = Exact<{
 }>;
 
 
-export type GetPokemonQuery = { __typename?: 'Query', pokemon?: { __typename?: 'Pokemon', id: string, name?: string | null } | null };
+export type GetPokemonQuery = { __typename?: 'Query', pokemon?: { __typename?: 'Pokemon', id: string, name?: string | null, classification?: string | null, types?: Array<string | null> | null, resistant?: Array<string | null> | null, weaknesses?: Array<string | null> | null, fleeRate?: number | null, maxCP?: number | null, maxHP?: number | null, image?: string | null, weight?: { __typename?: 'PokemonDimension', minimum?: string | null, maximum?: string | null } | null, height?: { __typename?: 'PokemonDimension', minimum?: string | null, maximum?: string | null } | null, attacks?: { __typename?: 'PokemonAttack', fast?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null, special?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null } | null, evolutionRequirements?: { __typename?: 'PokemonEvolutionRequirement', amount?: number | null, name?: string | null } | null } | null };
 
-
+export const PokemonFragmentDoc = gql`
+    fragment pokemon on Pokemon {
+  id
+  name
+  weight {
+    minimum
+    maximum
+  }
+  height {
+    minimum
+    maximum
+  }
+  classification
+  types
+  resistant
+  attacks {
+    fast {
+      name
+      type
+      damage
+    }
+    special {
+      name
+      type
+      damage
+    }
+  }
+  weaknesses
+  fleeRate
+  maxCP
+  evolutionRequirements {
+    amount
+    name
+  }
+  maxHP
+  image
+}
+    `;
 export const GetPokemonsDocument = gql`
     query GetPokemons($first: Int!) {
   pokemons(first: $first) {
-    id
-    name
+    ...pokemon
   }
 }
-    `;
+    ${PokemonFragmentDoc}`;
 
 /**
  * __useGetPokemonsQuery__
@@ -164,11 +202,10 @@ export type GetPokemonsQueryResult = Apollo.QueryResult<GetPokemonsQuery, GetPok
 export const GetPokemonDocument = gql`
     query GetPokemon($id: String, $name: String) {
   pokemon(id: $id, name: $name) {
-    id
-    name
+    ...pokemon
   }
 }
-    `;
+    ${PokemonFragmentDoc}`;
 
 /**
  * __useGetPokemonQuery__

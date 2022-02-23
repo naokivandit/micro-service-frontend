@@ -2,38 +2,23 @@ import React from "react";
 import { render } from "react-dom";
 import {
   ApolloProvider,
-  useQuery,
-  gql
 } from "@apollo/client";
 
 import { client } from "./lib/apollo/client";
+import { api } from "./services/api";
 
-function ExchangeRates() {
-  const { loading, error, data } = useQuery(gql`
-    {
-      rates(currency: "USD") {
-        currency
-        rate
-      }
-    }
-  `);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.rates.map(({ currency, rate }) => (
-    <div key={currency}>
-      <p>
-        {currency}: {rate}
-      </p>
-    </div>
-  ));
+const ExchangeRates = () => {
+  const { data } = api.pokemon.usePokemon({
+    first:10
+  })
+  console.log(data)
+  return ""
 }
 
 function App() {
   return (
     <div>
-      <h2>My first Apollo app 🚀</h2>
+      <h2>My first Apollo app</h2>
       <ExchangeRates />
     </div>
   );
