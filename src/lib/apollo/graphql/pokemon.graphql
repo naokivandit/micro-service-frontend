@@ -1,0 +1,13 @@
+query GetPokemons($first: Int!) {
+  pokemons(first: $first) {
+    id
+    name
+  }
+}
+
+query GetPokemon($id: String, $name: String) {
+  pokemon(id: $id, name: $name) {
+    id
+    name
+  }
+}

@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://graphql-pokemon2.vercel.app"
+documents: "src/lib/apollo/graphql/*.graphql"
+generates:
+  src/lib/apollo/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
